@@ -6,7 +6,7 @@ package:
   version: {{ version }}
 
 source:
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/alto-dev-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/alto-dev-{{ version }}.tar.gz
   sha256: 011167fd8a37999e9c5fd817d76b3c4f2a98ff8a7a9d5ba4cb3e8d1754457d83
 
 build:
@@ -14,15 +14,15 @@ build:
     - alto = alto.main:cli
   noarch: python
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  number: 0
+  number: 1
 
 requirements:
   host:
-    - python >=3.8
+    - python {{ python_min }}
     - setuptools >=41.1.0
     - pip
   run:
-    - python >=3.8
+    - python >={{ python_min }}
     - astor >=0.7
     - boto3 >=1
     - boto3-stubs >=1.34
@@ -55,6 +55,7 @@ test:
     - alto --help
   requires:
     - pip
+    - python {{ python_min }}
 
 about:
   home: https://github.com/runprism/alto
